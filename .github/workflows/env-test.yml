@@ -11,7 +11,7 @@ jobs:
       - name: Get commit SHA
         id: sha
         run: |
-          echo ::set-output name=short_sha::$(git rev-parse --short=7 ${{ github.sha }})
+          echo ::set-env name=short_sha::$(git rev-parse --short=7 ${{ github.sha }})
 
       - run: mkdir -p path/to/artifact
 
@@ -19,5 +19,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: artifact-${{ steps.sha.outputs.short_sha }}
+          name: artifact-${{ env.short_sha }}
           path: path/to/artifact/world.txt
