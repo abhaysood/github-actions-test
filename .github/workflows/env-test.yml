@@ -5,11 +5,11 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      short_sha: ${GITHUB_SHA::8}
     steps:
       - uses: actions/checkout@v2
       - name: Get commit SHA
-        env:
-          short_sha: ${GITHUB_SHA::8}
         id: sha
         run: |
           echo $short_sha
