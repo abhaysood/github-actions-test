@@ -7,11 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Generate a short commit SHA and set it as an env variable
       - name: Get commit SHA
+        env:
+          short_sha: ${{GITHUB_SHA::8}}
         id: sha
         run: |
-          echo ::set-env name=short_sha::$(git rev-parse --short=7 ${{ github.sha }})
+          echo $short_sha
 
       - run: mkdir -p path/to/artifact
 
