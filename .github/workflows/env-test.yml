@@ -2,7 +2,7 @@ name: 'build-test'
 on: [push]
 
 jobs:
-  build:
+  set-short-sha-env:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,3 +16,8 @@ jobs:
       - run: echo $SHA
         env: 
           SHA: ${{ env.SHA }}
+  use-sha:
+    needs: [set-short-sha-env]
+    runs-on: ubuntu-latest
+    steps:  
+      - run: echo $SHA
