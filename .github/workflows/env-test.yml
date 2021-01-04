@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Create a file'
-        run: touch ${{ git rev-parse --short "$GITHUB_SHA" }}.txt
+        run: touch $(echo $GITHUB_SHA | cut -c1-8).txt
       - name: 'Accidently upload to the same artifact via multiple jobs'
         uses: 'actions/upload-artifact@v2'
         with:
           name: my-artifact
-          path: ${{ git rev-parse --short "$GITHUB_SHA" }}.txt
+          path: $(echo $GITHUB_SHA | cut -c1-8).txt
