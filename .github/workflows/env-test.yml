@@ -6,17 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Get commit SHA
-        id: sha
-        run: |
-          echo ${GITHUB_SHA}
-
-      - run: mkdir -p path/to/artifact
-
-      - run: echo hello > path/to/artifact/world.txt
-
-      - uses: actions/upload-artifact@v2
+      - name: 'Create a file'
+        run: touch ${{ git rev-parse --short "$GITHUB_SHA" }}.txt
+      - name: 'Accidently upload to the same artifact via multiple jobs'
+        uses: 'actions/upload-artifact@v2'
         with:
-          name: artifact-${GITHUB_SHA::8}
-          path: path/to/artifact/world.txt
+          name: my-artifact
+          path: ${{ git rev-parse --short "$GITHUB_SHA" }}.txt
