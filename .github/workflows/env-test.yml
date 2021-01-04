@@ -1,15 +1,18 @@
-name: test
-
-on: push
+name: 'build-test'
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Create a file'
-        run: touch $(echo $GITHUB_SHA | cut -c1-8).txt
-      - name: 'Accidently upload to the same artifact via multiple jobs'
-        uses: 'actions/upload-artifact@v2'
+      - uses: actions/checkout@v2
+      - uses: benjlevesque/short-sha@v1.2
+        id: short-sha
         with:
-          name: my-artifact
-          path: $(echo $GITHUB_SHA | cut -c1-8).txt
+          length: 6
+      - run: echo $SHA
+        env: 
+          SHA: ${{ steps.short-sha.outputs.sha }}
+      - run: echo $SHA
+        env: 
+          SHA: ${{ env.SHA }}
