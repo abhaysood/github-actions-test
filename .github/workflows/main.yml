@@ -18,3 +18,12 @@ jobs:
       - run: echo $SHA
         env: 
           SHA: ${{ env.SHA }}
+  use-short-sha:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $SHA
+        env: 
+          SHA: ${{ job.set-env-short-sha.short-sha.outputs.sha }}
+      - run: echo $SHA
+        env: 
+          SHA: ${{ env.SHA }}
