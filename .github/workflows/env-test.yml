@@ -5,14 +5,12 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      short_sha: ${GITHUB_SHA}
     steps:
       - uses: actions/checkout@v2
       - name: Get commit SHA
         id: sha
         run: |
-          echo $short_sha
+          echo ${GITHUB_SHA}
 
       - run: mkdir -p path/to/artifact
 
@@ -20,5 +18,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: artifact-${{ env.short_sha }}
+          name: artifact-${{ GITHUB_SHA::8 }}
           path: path/to/artifact/world.txt
